@@ -23,3 +23,10 @@ Required edits:
 `02-franchisen.R`
 
 ![](figures/p1-franchisenBS.png)
+
+![](figures/p2-insureeCosts.png)
+
+![](figures/p3-insureeCosts.png)
+
+
+
