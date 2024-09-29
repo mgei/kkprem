@@ -28,5 +28,29 @@ Required edits:
 
 ![](figures/p3-insureeCosts.png)
 
+## Prämien
+
+`03-premien.R`
+
+Billigste Versicherung in BS bei hoher Franchise (Erwachsene, ohne Unfall)?
+
+![](figures/p4-billigsteBS.png)
+
+![](figures/p5-sanitasCompactOneBS.png)
+
+Kinder?
+
+![](figures/p6-billigsteBS.png)
+
+![](figures/p7-agrismartBS.png)
+
+![](figures/p8-qualimedBS.png)
+
+
+
+
+
+
+
 
 

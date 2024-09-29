@@ -89,5 +89,5 @@ p3 <- tibble(expenses = seq(0, 50000, by = 100)) |>
 
 p3 |> ggsave(filename = "figures/p3-insureeCosts.png", width = 10, height = 6, dpi = 100,
              bg = "white")
-
+  
 
