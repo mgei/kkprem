@@ -30,7 +30,7 @@ Required edits:
 
 ## Prämien
 
-`03-premien.R`
+`03-praemien.R`
 
 Billigste Versicherung in BS bei hoher Franchise (Erwachsene, ohne Unfall)?
 
@@ -46,11 +46,11 @@ Kinder?
 
 ![](figures/p8-qualimedBS.png)
 
+Unfall-Zusatz kostet im Schnitt rund 6.5% mehr. Warum aber Unfall bei Kinder? Was passiert wenn Kind verunfallt und kein Unfall-Zusatz abgeschlossen wurde?
 
+## Versicherte
 
+`04-versicherte.R`
 
-
-
-
-
+![](figures/p9-marktanteil.png)
 

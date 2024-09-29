@@ -108,3 +108,24 @@ insurances <- insurances |>
            str_pad(width = 4, side = "left", pad = "0"))
 
 insurances |> saveRDS("data/processed/insurances.RDS")
+
+
+# versicherte -------------------------------------------------------------
+
+versCH <- bind_rows(read_delim("data/unzipped/2011/Versicherte_CH.csv", delim = ";", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2012/Versicherte_CH.csv", delim = ";", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2013/Versicherte_CH.csv", delim = ";", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2014/Versicherte_CH.csv", delim = ";", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2015/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2016/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2017/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2018/Versichertenbestand_CH.csv", delim = ";", locale=locale(encoding="latin1")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2019/Versichertenbestand_CH.csv", delim = ";", locale=locale(encoding="latin1")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2020/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2021/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2022/Versichertenbestand_CH.csv", delim = ",", locale=locale(encoding="UTF-8")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2023/Versichertenbestand_CH.csv", delim = ";", locale=locale(encoding="latin1")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2024/Versichertenbestand_CH.csv", delim = ";", locale=locale(encoding="latin1")) |> rename_cols() |> fix_cols(),
+                    read_delim("data/unzipped/2025/Versichertenbestand_CH.csv", delim = ";", locale=locale(encoding="latin1")) |> rename_cols() |> fix_cols())
+
+versCH |> saveRDS("data/processed/versCH.RDS")
