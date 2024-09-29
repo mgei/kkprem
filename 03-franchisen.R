@@ -17,7 +17,7 @@ prim <- prim |>
 
 # Grundversicherung ohne Unfall -------------------------------------------
 
-prim |> 
+p1 <- prim |> 
   filter(Tariftyp == "TAR-BASE",
          Unfalleinschluss == "OHN-UNF",
          Altersklasse == "AKL-ERW") |>
@@ -38,3 +38,7 @@ prim |>
        title = "Franchisevergleich",
        subtitle = "Grundversicherung ohne Unfall, Erwachsene, Basel-Stadt, 2025") +
   theme(legend.position = "none")
+
+p1 |> 
+  ggsave(filename = "figures/p1-franchisenBS.png", width = 10, height = 6, dpi = 100,
+         bg = "white")
