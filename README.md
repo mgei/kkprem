@@ -54,3 +54,17 @@ Unfall-Zusatz kostet im Schnitt rund 6.5% mehr. Warum aber Unfall bei Kinder? Wa
 
 ![](figures/p9-marktanteil.png)
 
+## Entwicklung Prämien
+
+`05-entwicklung.R`
+
+![](figures/p10-entwicklungBS.png)
+
+In Basel-Stadt ist die tiefste Prämie (Erwachsene, Franchise 2500, ohne Unfall, alle Modelle) von 2011 bis 2025 um 80% gestiegen. Die tiefste Standard Prämie gar um 88%. Dies entspricht 4.6% p.a.
+
+Während stets Assura die tieste Prämie hatte, hat im 2025 erstmals Vivao Sympany die tiefste Prämie (Standard und andere mit casamed hmo, 2024 Mutuel).
+
+![](figures/p11-entwicklungBS300.png)
+
+Die Steigerung ist weniger stark bei den tiefsten Franchise (300). Hier ist die tiefste Prämie von 2011 bis 2025 um 58% gestiegen. Die tiefste Standard Prämie um 60%. Dies entspricht 3.4% p.a.
+
