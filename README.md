@@ -18,6 +18,12 @@ Required edits:
 * change `archive_urls` according to https://opendata.swiss/de/dataset/health-insurance-premiums
 * change `current_url` and `current_files` according to https://opendata.swiss/de/dataset/health-insurance-premiums
 
+### Bilanz und Erfolgsrechnung
+
+Daten: https://www.bag.admin.ch/bag/de/home/versicherungen/krankenversicherung/krankenversicherung-versicherer-aufsicht/reporting/betriebsrechnungenundbilanzen.html
+
+`10-loaddata_financials.R`
+
 ## Franchisen
 
 `02-franchisen.R`
@@ -67,4 +73,3 @@ Während stets Assura die tieste Prämie hatte, hat im 2025 erstmals Vivao Sympa
 ![](figures/p11-entwicklungBS300.png)
 
 Die Steigerung ist weniger stark bei den tiefsten Franchise (300). Hier ist die tiefste Prämie von 2011 bis 2025 um 58% gestiegen. Die tiefste Standard Prämie um 60%. Dies entspricht 3.4% p.a.
-
