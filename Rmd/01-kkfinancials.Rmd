@@ -1,0 +1,147 @@
+---
+title: "Schweizer Krankenkassen Financials"
+author: "Martin Geissmann"
+date: "2024-10-06"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(ggrepel)
+theme_set(theme_minimal())
+
+# if longer than max then abbreviate and add ...
+str_abbreviate <- function(x, n = 20) {
+  ifelse(nchar(x) > n, paste0(str_sub(x, 1, n), "..."), x)
+}
+```
+
+## Data
+
+Source: https://www.bag.admin.ch/bag/de/home/versicherungen/krankenversicherung/krankenversicherung-versicherer-aufsicht/reporting/betriebsrechnungenundbilanzen.html
+
+Load: https://github.com/mgei/kkprem/blob/main/10-loaddata_financials.R
+
+```{r}
+findata_bs <- readRDS("../data/processed/findata_bs.RDS")
+findata_is <- readRDS("../data/processed/findata_is.RDS")
+
+```
+
+## Bilanz
+
+### Eigenkapital
+
+```{r, fig.height=9}
+findata_bs |> 
+  filter(Beschreibung == "Eigenkapital") |> 
+  ggplot(aes(x = reorder(str_abbreviate(Name, 25), `2023`), y = `2023`/1e6, fill = Name)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "Eigenkapital [Mio. CHF]",
+       title = "Eigenkapital der Krankenversicherer",
+       subtitle = "Bilanz 2023") +
+  theme(legend.position = "none")
+```
+
+
+```{r, fig.height=6}
+# scatterplot 2023 vs 2024
+findata_bs |> 
+  filter(Beschreibung == "Eigenkapital") |> 
+  mutate(lessEq = ifelse(`2023` <= `2022`, "Ja", "Nein")) |>
+  ggplot(aes(x = `2022`/1e6, y = `2023`/1e6, label = str_abbreviate(Name, 25))) +
+  geom_point(aes(color = lessEq)) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", size = 0.1) +
+  geom_text_repel() +
+  labs(x = "Eigenkapital 2022 [Mio. CHF]", y = "Eigenkapital 2023 [Mio. CHF]",
+       title = "Eigenkapital 2022 vs 2023",
+       color = "EK 2023 < EK 2022") +
+  scale_color_manual(values = c("Ja" = "darkgreen", "Nein" = "red")) +
+  theme(legend.position = "bottom")
+```
+
+## Erfolgsrechnung
+
+### Prämien
+
+```{r, fig.height=9}
+findata_is |> 
+  filter(Beschreibung == "Prämien für eigene Rechnung (3)") |> 
+  group_by(Name) |>
+  slice_head(n = 1) |> 
+  ggplot(aes(x = reorder(str_abbreviate(Name, 25), `2023`), y = `2023`/1e6, fill = Name)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "Verdiente Prämien OKV KVG [Mio. CHF]",
+       title = "Verdiente Prämien der Krankenversicherer",
+       subtitle = "ER 2023") +
+  theme(legend.position = "none")
+```
+
+```{r}
+# scattervergleich 2023 zo 2022
+findata_is |> 
+  filter(Beschreibung == "Prämien für eigene Rechnung (3)") |> 
+  mutate(lessEq = ifelse(`2023` <= `2022`, "Ja", "Nein")) |>
+  ggplot(aes(x = `2022`/1e6, y = `2023`/1e6, label = str_abbreviate(Name, 25))) +
+  geom_point(aes(color = lessEq)) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", size = 0.1) +
+  geom_text_repel() +
+  labs(x = "Verdiente Prämien 2022 [Mio. CHF]", y = "Verdiente Prämien 2023 [Mio. CHF]",
+       title = "Verdiente Prämien 2022 vs 2023",
+       color = "Prämien 2023 < Prämien 2022") +
+  scale_color_manual(values = c("Ja" = "darkgreen", "Nein" = "red")) +
+  theme(legend.position = "bottom")
+```
+
+Hauptverschiebung bei Arcosana welche in die CSS integriert wurde. Ebenfalls SWICA doppelt, Grund?
+
+### Kosten für medizinische Call-Center
+
+```{r, fig.height=9}
+findata_is |> 
+  filter(Beschreibung == "Kosten für medizinische Call-Center") |> 
+  group_by(Name) |>
+  slice_head(n = 1) |> 
+  ggplot(aes(x = reorder(str_abbreviate(Name, 25), -`2023`), y = -`2023`/1e6, fill = Name)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "Kosten für medizinische Call-Center [Mio. CHF]",
+       title = "Kosten für medizinische Call-Center",
+       subtitle = "ER 2023") +
+  theme(legend.position = "none")
+```
+
+```{r, fig.height=9}
+# kosten med call center by prämien
+findata_is |> 
+  filter(Beschreibung %in% c("Kosten für medizinische Call-Center",
+                             "Prämien für eigene Rechnung (3)")) |>
+  group_by(BAGNr, Name, Beschreibung) |>
+  slice_head(n = 1) |>
+  ungroup() |> 
+  select(BAGNr, Name, Beschreibung, `2023`) |>
+  pivot_wider(names_from = Beschreibung, values_from = `2023`, values_fill = 0) |>
+  mutate(cost_prämie = `Kosten für medizinische Call-Center`/`Prämien für eigene Rechnung (3)`) |> 
+  ggplot(aes(x = reorder(str_abbreviate(Name, 25), -cost_prämie), y = -cost_prämie, fill = Name)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = NULL, y = "Kosten für medizinische Call-Center in % der Prämien",
+       title = "Kosten für medizinische Call-Center",
+       subtitle = "ER 2023") +
+  theme(legend.position = "none")
+```
+
+tbc... (Werbeaufwand/[neue Prämien], Verwaltungskosten/Prämien, bezahlte Provisionen)
+
+See also https://github.com/mgei/kkprem/tree/main

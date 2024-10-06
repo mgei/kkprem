@@ -49,7 +49,7 @@ findata_bs <- findata |>
 findata_is <- findata |> 
   filter(!is.na(Beschreibung)) |> 
   mutate(Name = recode(BAGNr, !!!vers)) |> 
-  filter(get_first_digit_V(Konto) >= 4 | is.na(get_first_digit_V(Konto)))
+  filter(get_first_digit_V(Konto) >= 3 | is.na(get_first_digit_V(Konto)))
 
 findata_bs |> saveRDS("data/processed/findata_bs.RDS")
 findata_is |> saveRDS("data/processed/findata_is.RDS")

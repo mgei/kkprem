@@ -73,3 +73,9 @@ Während stets Assura die tieste Prämie hatte, hat im 2025 erstmals Vivao Sympa
 ![](figures/p11-entwicklungBS300.png)
 
 Die Steigerung ist weniger stark bei den tiefsten Franchise (300). Hier ist die tiefste Prämie von 2011 bis 2025 um 58% gestiegen. Die tiefste Standard Prämie um 60%. Dies entspricht 3.4% p.a.
+
+## Financials
+
+`Rmd/01-kkfinancials.Rmd`
+
+See https://rpubs.com/mgei/1228586
